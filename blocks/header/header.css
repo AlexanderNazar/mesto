@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    min-height: 84px;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+@media (min-width: 767px) {
+    .header {
+        min-height: 119px;
+        max-width: 581px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1023px) {
+    .header {
+        max-width: 880px;
+    }
+}
