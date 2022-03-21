@@ -5,7 +5,7 @@
   color: inherit;
   background-color: transparent;
   background-image: url(../../../image/Add-Button.svg);
-  background-size: cover;
+  background-size: contain;
   height: 50px;
   width: 282px;
 }
