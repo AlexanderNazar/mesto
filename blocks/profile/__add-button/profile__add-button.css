@@ -5,6 +5,7 @@
   color: inherit;
   background-color: transparent;
   background-image: url(../../../image/Add-Button.svg);
+  box-sizing: border-box;
   height: 50px;
   width: 282px;
 }
