@@ -1,0 +1,10 @@
+.elements {
+  padding-bottom: 48px;
+
+}
+
+@media (min-width: 767px) {
+  .elements {
+    padding-bottom: 67px;
+  }
+}

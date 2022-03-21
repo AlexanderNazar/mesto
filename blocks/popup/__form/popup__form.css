@@ -1,0 +1,38 @@
+.popup__form {
+  border: 0;
+  box-sizing: border-box;
+  height: 27px;
+  width: 238px;
+  margin: 0 auto 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 0;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media (min-width: 767px) {
+  .popup__form {
+    width: 358px;
+  }
+}
+
+.popup__form:focus {
+  outline-color: #42aaff;
+  border-radius: 1px;
+}
+
+.popup__form::placeholder {
+  color: black;
+}
+
+.popup__form::-webkit-input-placeholder {
+  color: black;
+}
+
+.popup__form::-moz-placeholder {
+  color: black;
+}
+
+.popup__form::-ms-input-placeholder {
+  color: black;
+}

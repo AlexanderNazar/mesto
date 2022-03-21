@@ -1,0 +1,24 @@
+.profile__add-button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  background-image: url(../../../image/Add-Button.svg);
+  height: 50px;
+  width: 282px;
+}
+
+@media (min-width: 767px) {
+  .profile__add-button {
+    height: 50px;
+    width: 150px;
+    background-image: url(../../../image/Add-Button-desktop.svg);
+    grid-column: 4/5;
+  }
+}
+
+.profile__add-button:hover {
+  cursor: pointer;
+  opacity: .6;
+}
