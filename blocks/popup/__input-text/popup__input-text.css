@@ -1,4 +1,4 @@
-.popup__form {
+.popup__input-text {
   border: 0;
   box-sizing: border-box;
   height: 27px;
@@ -11,28 +11,28 @@
 }
 
 @media (min-width: 767px) {
-  .popup__form {
+  .popup__input-text {
     width: 358px;
   }
 }
 
-.popup__form:focus {
+.popup__input-text:focus {
   outline-color: #42aaff;
   border-radius: 1px;
 }
 
-.popup__form::placeholder {
+.popup__input-text::placeholder {
   color: black;
 }
 
-.popup__form::-webkit-input-placeholder {
+.popup__input-text::-webkit-input-placeholder {
   color: black;
 }
 
-.popup__form::-moz-placeholder {
+.popup__input-text::-moz-placeholder {
   color: black;
 }
 
-.popup__form::-ms-input-placeholder {
+.popup__input-text::-ms-input-placeholder {
   color: black;
 }

@@ -12,64 +12,64 @@
 <body>
   <div class="root">
     <header class="header">
-      <img src="./image/logo.svg" alt="Логотип сервиса Mesto" class="header__logo">
+      <img src="./images/logo.svg" alt="Логотип сервиса Mesto" class="header__logo">
     </header>
     <main class="content">
       <section class="profile">
-        <img src="./image/avatarJak.jpg" alt="" class="profile__avatar">
+        <img src="./images/avatarJak.jpg" alt="Фото пользовантеля" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__title">
-            <p class="profile__name">Жак-Ив Кусто</p>
-            <button type="button" class="profile__edit-button"></button>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
           </div>
           <p class="profile__profession">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button"></button>
+        <button type="button" class="profile__add-button" aria-label="Добавить"></button>
       </section>
       <section class="elements">
         <ul class="elements__album">
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-karachaevsk.png" alt="Древние руины церкви на фоне гор.">
+            <img class="elements__image" src="./images/elem-karachaevsk.png" alt="Древние руины церкви на фоне гор.">
             <div class="elements__caption">
-              <p class="elements__title">Карачаево-Черкессия</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Карачаево-Черкессия</h2>
+              <button class="elements__heart" type="button"></button>
             </div>
           </li>
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-elbrus.png" alt="Далеко в утренней персиковой туманке гора Эльбрус.">
+            <img class="elements__image" src="./images/elem-elbrus.png" alt="Далеко в утренней персиковой туманке гора Эльбрус.">
             <div class="elements__caption">
-              <p class="elements__title">Гора Эльбрус</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Гора Эльбрус</h2>
+              <button class="elements__heart" type="button"></button>
             </div>
           </li>
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-dombai.png" alt="Остропикие вершины гор. На переднем плане лес.">
+            <img class="elements__image" src="./images/elem-dombai.png" alt="Остропикие вершины гор. На переднем плане лес.">
             <div class="elements__caption">
-              <p class="elements__title">Домбай</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Домбай</h2>
+              <button class="elements__heart" type="button"></button>
             </div>
           </li>
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-emblsaid.jpg"
+            <img class="elements__image" src="./images/elem-emblsaid.jpg"
             alt="Зеркальная гладь озера. На фоне холмы и невысокие горы.">
             <div class="elements__caption">
-              <p class="elements__title">Эмблсайд</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Эмблсайд</h2>
+              <button class="elements__heart" type="button"></button>
             </div>
           </li>
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-frankfurt.jpg"
+            <img class="elements__image" src="./images/elem-frankfurt.jpg"
             alt="Ночной Франкфурт с высоты птичьего полета. Жилые районы, река, мосты.">
             <div class="elements__caption">
-              <p class="elements__title">Франкфурт</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Франкфурт</h2>
+              <button class="elements__heart" type="button"></button>
             </div></li>
           <li class="elements__element">
-            <img class="elements__mask-groupe" src="./image/elem-canada.jpg"
+            <img class="elements__image" src="./images/elem-canada.jpg"
             alt="Велосепидисты путешествуют по дороге между вековых елей.">
             <div class="elements__caption">
-              <p class="elements__title">Канада</p>
-              <button class="elements__heart"></button>
+              <h2 class="elements__title">Канада</h2>
+              <button class="elements__heart" type="button"></button>
             </div>
           </li>
         </ul>
@@ -80,13 +80,15 @@
     </footer>
   </div>
   <div class="popup">
-    <form class="popup__container">
-      <button class="popup__close-button"></button>
-      <h3 class="popup__title">Редактировать профиль</h3>
-      <input type="text" class="popup__form" name="name">
-      <input type="text" class="popup__form" name="profession">
-      <button type="submit" class="popup__save-button">Сохранить</button>
-    </form>
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <form class="popup__form-profile-value" name="profile-value">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" class="popup__input-text" name="name" required placeholder="Ваше имя">
+        <input type="text" class="popup__input-text" name="profession" required placeholder="Ваша профессия">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+    </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>

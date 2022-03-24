@@ -1,0 +1,9 @@
+.popup__form-profile-value {
+  width: 238px;
+}
+
+@media (min-width: 767px) {
+  .popup__form-profile-value {
+    width: 358px;
+  }
+}

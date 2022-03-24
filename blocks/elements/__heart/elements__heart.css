@@ -6,7 +6,7 @@
   height: 19px;
   width: 22px;
   align-self: center;
-  background-image: url(../../../image/heart.svg);
+  background-image: url(../../../images/heart.svg);
 }
 
 .elements__heart:hover {
@@ -15,6 +15,6 @@
 }
 
 .elements__heart:active {
-  background-image: url(../../../image/heart-active.svg);
+  background-image: url(../../../images/heart-active.svg);
   opacity: 1;
 }
