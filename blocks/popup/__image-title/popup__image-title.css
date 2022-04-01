@@ -1,5 +1,6 @@
-.popup-image__title {
+.popup__image-title {
   position: absolute;
+  color: white;
   margin: 0;
   bottom: -25px;
   left: 0;

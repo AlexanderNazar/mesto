@@ -4,16 +4,16 @@ const closeButton = popupElement.querySelector('.popup__close-button');
 const closeButtonAddImage = document.querySelectorAll('.popup__close-button')[1];
 const closeButtonImage = document.querySelectorAll('.popup__close-button')[2];
 const addButton = document.querySelector('.profile__add-button');
-let nameInput = popupElement.querySelector('input[name=name]');
-let professionInput = popupElement.querySelector('input[name=profession]');
-let placeInput = document.querySelector('input[name=place]');
-let linkInput = document.querySelector('input[name=link]');
+const nameInput = popupElement.querySelector('input[name=name]');
+const professionInput = popupElement.querySelector('input[name=profession]');
+const placeInput = document.querySelector('input[name=place]');
+const linkInput = document.querySelector('input[name=link]');
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
 const formElement = popupElement.querySelector('.popup__container');
 const formElementAddImage = document.querySelectorAll('.popup__container')[1];
 const cardAlbum = document.querySelector('.elements__album');
-const popupImage = document.querySelector('.popup-image');
+const popupImage = document.querySelectorAll('.popup')[2];
 
 const initialCards = [
   {
@@ -62,9 +62,9 @@ const createCards = (function (name, link) {
   });
 //Открытие Попапа с изображением
   cardImage.addEventListener('click', function () {
-  popupImage.classList.add('popup-image_opened');
-  document.querySelector('.popup-image__title').textContent = name;
-  document.querySelector('.popup-image__image').src = link;
+  popupImage.classList.add('popup_opened');
+  document.querySelector('.popup__image-title').textContent = name;
+  document.querySelector('.popup__open-image').src = link;
   })
 
   return cardElement;
@@ -84,7 +84,7 @@ function addElement (evt) {
   placeInput.value = '';
   linkInput.value = '';
 };
-
+//Функция отрисовки новой карточки
   const renderCard = function(name, link) {
   cardAlbum.prepend(createCards(name, link));
 };
@@ -110,7 +110,7 @@ function closePopupAddImage() {
 };
 // Функция закрытия Попапа с изображением
 function closePopupImage() {
-  popupImage.classList.remove('popup-image_opened');
+  popupImage.classList.remove('popup_opened');
 };
 // Функция передачи текста из формы Попапа на страницу
 function formSubmitHandler (evt) {
@@ -121,7 +121,7 @@ function formSubmitHandler (evt) {
 
   closePopup();
 };
-
+//Функция отрисовки карточек из массива
 const cardElements = initialCards.map(function (card) {
   return createCards(card.name, card.link);
 });
