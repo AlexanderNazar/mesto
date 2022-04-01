@@ -28,50 +28,7 @@
       </section>
       <section class="elements">
         <ul class="elements__album">
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-karachaevsk.png" alt="Древние руины церкви на фоне гор.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Карачаево-Черкессия</h2>
-              <button class="elements__heart" type="button"></button>
-            </div>
-          </li>
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-elbrus.png" alt="Далеко в утренней персиковой туманке гора Эльбрус.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Гора Эльбрус</h2>
-              <button class="elements__heart" type="button"></button>
-            </div>
-          </li>
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-dombai.png" alt="Остропикие вершины гор. На переднем плане лес.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Домбай</h2>
-              <button class="elements__heart" type="button"></button>
-            </div>
-          </li>
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-emblsaid.jpg"
-            alt="Зеркальная гладь озера. На фоне холмы и невысокие горы.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Эмблсайд</h2>
-              <button class="elements__heart" type="button"></button>
-            </div>
-          </li>
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-frankfurt.jpg"
-            alt="Ночной Франкфурт с высоты птичьего полета. Жилые районы, река, мосты.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Франкфурт</h2>
-              <button class="elements__heart" type="button"></button>
-            </div></li>
-          <li class="elements__element">
-            <img class="elements__image" src="./images/elem-canada.jpg"
-            alt="Велосепидисты путешествуют по дороге между вековых елей.">
-            <div class="elements__caption">
-              <h2 class="elements__title">Канада</h2>
-              <button class="elements__heart" type="button"></button>
-            </div>
-          </li>
+
         </ul>
       </section>
     </main>
@@ -90,6 +47,37 @@
       </form>
     </div>
   </div>
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <form class="popup__form-profile-value" name="profile-value">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" class="popup__input-text" name="place" required placeholder="Название">
+        <input type="text" class="popup__input-text" name="link" required placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup-image">
+    <div class="popup-image__container">
+      <button class="popup__close-button" type="button"></button>
+      <img class="popup-image__image" src="#" alt="">
+      <h2 class="popup-image__title"></h2>
+    </div>
+  </div>
+  </div>
+
+  <template id="element-template">
+    <li class="elements__element">
+      <button class="elements__delete" type="button"></button>
+      <img class="elements__image" src="#" alt="">
+      <div class="elements__caption">
+        <h2 class="elements__title"></h2>
+        <button class="elements__heart" type="button"></button>
+      </div>
+    </li>
+  </template>
+
   <script src="./scripts/index.js"></script>
 </body>
 </html>
