@@ -22,17 +22,17 @@
 }
 
 .popup__input-text::placeholder {
-  color: black;
+  color: #C4C4C4;
 }
 
 .popup__input-text::-webkit-input-placeholder {
-  color: black;
+  color: #C4C4C4;
 }
 
 .popup__input-text::-moz-placeholder {
-  color: black;
+  color: #C4C4C4;
 }
 
 .popup__input-text::-ms-input-placeholder {
-  color: black;
+  color: #C4C4C4;
 }
