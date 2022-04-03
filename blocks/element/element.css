@@ -1,4 +1,4 @@
-.elements__element {
+.element {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -13,11 +13,11 @@
 }
 
 @media (min-width: 767px) {
-  .elements__element {
+  .element {
     margin: 0;
   }
 }
 
-.elements__element:last-child {
+.element:last-child {
   margin-bottom: 0;
 }

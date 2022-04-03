@@ -1,19 +1,19 @@
-const popupElement = document.querySelector('.popup');
-const popupAddImage = document.querySelectorAll('.popup')[1];
-const popupOpenedImage = document.querySelectorAll('.popup')[2];
+const popupEditProfile = document.querySelector('.popup_type_profile');
+const popupAddImage = document.querySelector('.popup_type_add-image');
+const popupOpenedImage = document.querySelector('.popup_type_preview');
 const profileEditButton = document.querySelector('.profile__edit-button');
-const buttonСlosing = popupElement.querySelector('.popup__close-button');
-const buttonСlosingAddImage = document.querySelectorAll('.popup__close-button')[1];
-const buttonСlosingImage = document.querySelectorAll('.popup__close-button')[2];
+const buttonСlosing = popupEditProfile.querySelector('.popup__close-button_type_profile');
+const buttonСlosingAddImage = document.querySelector('.popup__close-button_type_add-image');
+const buttonСlosingImage = document.querySelector('.popup__close-button_type_preview');
 const buttonAddImage = document.querySelector('.profile__add-button');
-const nameInput = popupElement.querySelector('input[name=name]');
-const professionInput = popupElement.querySelector('input[name=profession]');
+const nameInput = popupEditProfile.querySelector('input[name=name]');
+const professionInput = popupEditProfile.querySelector('input[name=profession]');
 const placeInput = document.querySelector('input[name=place]');
 const linkInput = document.querySelector('input[name=link]');
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__profession');
-const formElement = popupElement.querySelector('.popup__container');
-const formElementAddImage = document.querySelectorAll('.popup__container')[1];
+const formElement = popupEditProfile.querySelector('.popup__container_type_profile');
+const formElementAddImage = document.querySelector('.popup__container_type_add-image');
 const cardAlbum = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#element-template');
 const imageOpenTitle = document.querySelector('.popup__image-title');
@@ -21,17 +21,17 @@ const imageOpenLink = document.querySelector('.popup__open-image');
 
 //Функция создания карточки
 const createCard = (card) => {
-  const cardElement = cardTemplate.content.querySelector('.elements__element').cloneNode(true);
-  const likeButton = cardElement.querySelector('.elements__heart');
-  const deleteButton = cardElement.querySelector('.elements__delete');
-  const cardImage = cardElement.querySelector('.elements__image');
+  const cardElement = cardTemplate.content.querySelector('.element').cloneNode(true);
+  const likeButton = cardElement.querySelector('.element__heart');
+  const deleteButton = cardElement.querySelector('.element__delete');
+  const cardImage = cardElement.querySelector('.element__image');
 
-  cardElement.querySelector('.elements__title').textContent = card.name;
+  cardElement.querySelector('.element__title').textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
   //Лайк
   const turnLikeButton = (evt) => {
-    evt.target.classList.toggle('elements__heart_active');
+    evt.target.classList.toggle('element__heart_active');
   };
   likeButton.addEventListener('click', turnLikeButton);
   //Удаление карточки по щелчку крестика
@@ -40,9 +40,9 @@ const createCard = (card) => {
   });
   //Открытие Попапа с изображением
   cardImage.addEventListener('click', () => {
-    openPopup(popupOpenedImage);
     imageOpenTitle.textContent = card.name;
     imageOpenLink.src = card.link;
+    openPopup(popupOpenedImage);
   });
 
   return cardElement;
@@ -56,8 +56,7 @@ const addElement = (evt) => {
   };
   renderCard(cardAlbum, object);
   closePopup(popupAddImage);
-  placeInput.value = '';
-  linkInput.value = '';
+  document.querySelector('.popup__form_type__add-image').reset();
 };
 //Функция отрисовки новой карточки
 const renderCard = (placeRender, card) => {
@@ -76,7 +75,7 @@ const sendFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = professionInput.value;
-  closePopup(popupElement);
+  closePopup(popupEditProfile);
 };
 //Функция отрисовки карточек из массива
 const cardElements = initialCards.map(card => createCard(card));
@@ -84,14 +83,14 @@ const cardElements = initialCards.map(card => createCard(card));
 cardAlbum.append(...cardElements);
 
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupElement);
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
+  openPopup(popupEditProfile);
 });
 
 buttonAddImage.addEventListener('click', () => openPopup(popupAddImage));
 
-buttonСlosing.addEventListener('click', () => closePopup(popupElement));
+buttonСlosing.addEventListener('click', () => closePopup(popupEditProfile));
 
 buttonСlosingAddImage.addEventListener('click', () => closePopup(popupAddImage));
 

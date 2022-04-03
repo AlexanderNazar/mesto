@@ -1,4 +1,4 @@
-.elements__delete {
+.element__delete {
   padding: 0;
   border: none;
   color: inherit;
@@ -12,7 +12,7 @@
   transition: opacity .1s linear;
 }
 
-.elements__delete:hover {
+.element__delete:hover {
   opacity: .6;
   cursor: pointer;
 }

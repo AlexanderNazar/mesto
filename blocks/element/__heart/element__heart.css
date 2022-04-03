@@ -1,4 +1,4 @@
-.elements__heart {
+.element__heart {
   padding: 0;
   border: none;
   color: inherit;
@@ -9,12 +9,12 @@
   background-image: url(../../../images/heart.svg);
 }
 
-.elements__heart:hover {
+.element__heart:hover {
   cursor: pointer;
   opacity: .5;
 }
 
-.elements__heart:active {
+.element__heart:active {
   background-image: url(../../../images/heart-active.svg);
   opacity: 1;
 }

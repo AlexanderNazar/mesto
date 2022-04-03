@@ -1,9 +1,9 @@
-.elements__image {
+.element__image {
   height: 282px;
   width: 282px;
   object-fit: cover;
 }
 
-.elements__image:hover {
+.element__image:hover {
   cursor: pointer;
 }
