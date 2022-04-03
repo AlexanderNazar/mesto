@@ -64,7 +64,7 @@
 
 @import url(../blocks/popup/__form/popup__form.css);
 
-@import url(../blocks/popup/__form/_type/popup__form_type__add-image.css);
+@import url(../blocks/popup/__form/_type/popup__form_type_add-image.css);
 
 @import url(../blocks/popup/__form/_type/popup__form_type_profile.css);
 

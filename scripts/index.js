@@ -56,7 +56,7 @@ const addElement = (evt) => {
   };
   renderCard(cardAlbum, object);
   closePopup(popupAddImage);
-  document.querySelector('.popup__form_type__add-image').reset();
+  document.querySelector('.popup__form_type_add-image').reset();
 };
 //Функция отрисовки новой карточки
 const renderCard = (placeRender, card) => {
