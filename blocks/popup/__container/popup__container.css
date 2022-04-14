@@ -17,3 +17,7 @@
     width: 430px;
   }
 }
+
+.popup__container {
+  cursor: auto;
+}

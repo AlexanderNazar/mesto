@@ -1,3 +1,7 @@
 .popup__container-image {
   position: relative;
 }
+
+.popup__container-image {
+  cursor: auto;
+}

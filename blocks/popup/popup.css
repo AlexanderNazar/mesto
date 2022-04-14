@@ -14,3 +14,7 @@
   visibility: hidden;
   transition: visibility .2s, opacity .2s linear;
 }
+
+.popup:hover {
+  cursor: pointer;
+}
