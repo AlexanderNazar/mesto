@@ -7,7 +7,7 @@ const objectValidation = {
   inactiveButtonClass: 'popup__save-button_invalid',
   inputErrorClass: 'popup__input-text_type_error'
 };
-
+//Функция валидирования форм
 const enableValidation = (evt) => {
   const currentForm = evt.currentTarget;
   const input = evt.target;
@@ -17,7 +17,15 @@ const enableValidation = (evt) => {
   isValid(input);
   toggleButtonState(currentForm, submitButton, objectValidation.inactiveButtonClass);
 }
-
+//Функция, добавляющая стили невалидного Инпата
+const showInputError = (element) => {
+  element.classList.add(objectValidation.inputErrorClass);
+}
+//Функция, укаляющая стили невалидного Инпата
+const hideInputError = (element) => {
+  element.classList.remove(objectValidation.inputErrorClass);
+}
+//Функция, изменяющая стили Инпатов, в зависимости от её валидности
 const isValid = (input) => {
   if (input.checkValidity()) {
     hideInputError(input);
@@ -25,7 +33,7 @@ const isValid = (input) => {
     showInputError(input);
   }
 }
-
+//Функция изменяющая стили и активность кнопки Сохранить, в зависимости от её валидности
 const toggleButtonState = (form, button, classButtonInvalid) => {
   if (form.checkValidity()) {
     button.disabled = false;
@@ -35,20 +43,12 @@ const toggleButtonState = (form, button, classButtonInvalid) => {
     button.classList.add(classButtonInvalid);
   }
 }
-
+//Функция, добавляющая текст ошибки невалидной формы
 const validateInput = (input) => {
   const errorElement = input.parentNode.querySelector(`#${input.id}-error`);
   errorElement.textContent = input.validationMessage;
 }
-
-const showInputError = (element) => {
-  element.classList.add(objectValidation.inputErrorClass);
-}
-
-const hideInputError = (element) => {
-  element.classList.remove(objectValidation.inputErrorClass);
-}
-
+//Функция, валидирующая Инпаты формы, при открытии
 const validateInitiallyInput = (element) => {
   const inputList = Array.from(element.querySelectorAll(objectValidation.inputSelector));
   inputList.forEach((inputElement) => {
@@ -56,31 +56,14 @@ const validateInitiallyInput = (element) => {
   validateInput(inputElement);
   })
 };
-
+//Функция закрытия Попапов при нажатии клавиши Escape
 const closePopupEscape = (evt, popup) => {
   if (evt.key === "Escape") {
     closePopup(popup);
     document.removeEventListener('keydown', (evt) => closePopupEscape(evt, popup));
   }
 }
-
-/*profileEditButton.addEventListener('click', () => {
-  //nameInput.value = profileName.textContent;
-  //professionInput.value = profileProfession.textContent;
-  validateInitiallyInput(formEditUser);
-  toggleButtonState(formEditUser, formEditUser.elements.submit, objectValidation.inactiveButtonClass);
-  //openPopup(popupEditProfile);
-  document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupEditProfile));
-});
-
-buttonAddImage.addEventListener('click', () => {
-  toggleButtonState(formAddImage, formAddImage.elements.submit, objectValidation.inactiveButtonClass);
-  //openPopup(popupAddImage);
-  document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupAddImage));
-});*/
-
+//Слушатель валидации формы изменения профиля
 formEditUser.addEventListener('input', enableValidation);
+//Слушатель валидации формы добавления изображения
 formAddImage.addEventListener('input', enableValidation);
-
-/////////////////////////////
-

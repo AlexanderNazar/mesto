@@ -18,8 +18,6 @@ const cardAlbum = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#element-template');
 const imageOpenTitle = popupOpenedImage.querySelector('.popup__image-title');
 const imageOpenLink = popupOpenedImage.querySelector('.popup__open-image');
-//const formEditUser = document.forms.profile;
-//const formAddImage = document.forms.add;
 
 //Функция создания карточки
 const createCard = (card) => {
@@ -82,98 +80,30 @@ const sendFormSubmit = (evt) => {
 };
 //Функция отрисовки карточек из массива
 const cardElements = initialCards.map(card => createCard(card));
-
 cardAlbum.append(...cardElements);
-
-///////////////////////////////////////////////////
-/*
-const handleInput = (evt) => {
-  const currentForm = evt.currentTarget;
-  const input = evt.target;
-  const submitButton = currentForm.querySelector('.popup__save-button');
-
-  validateInput(input);
-  isValid(input);
-  toggleButtonState(currentForm, submitButton, 'popup__save-button_invalid');
-}
-
-const isValid = (input) => {
-  if (input.checkValidity()) {
-    hideInputError(input);
-  } else {
-    showInputError(input);
-  }
-}
-
-const toggleButtonState = (form, button, classButtonInvalid) => {
-  if (form.checkValidity()) {
-    button.disabled = false;
-    button.classList.remove(classButtonInvalid);
-  } else {
-    button.disabled = true;
-    button.classList.add(classButtonInvalid);
-  }
-}
-
-const validateInput = (input) => {
-  const errorElement = input.parentNode.querySelector(`#${input.id}-error`);
-  errorElement.textContent = input.validationMessage;
-}
-
-const showInputError = (element) => {
-  element.classList.add('popup__input-text_type_error');
-}
-
-const hideInputError = (element) => {
-  element.classList.remove('popup__input-text_type_error');
-}
-
-const validateInitiallyInput = (element) => {
-  const inputList = Array.from(element.querySelectorAll('.popup__input-text'));
-  inputList.forEach((inputElement) => {
-  isValid(inputElement);
-  validateInput(inputElement);
-  })
-};
-
-const closePopupEscape = (evt, popup) => {
-  if (evt.key === "Escape") {
-    closePopup(popup);
-    document.removeEventListener('keydown', (evt) => closePopupEscape(evt, popup));
-  }
-}
-*/
-//////////////////////////////////////////////////////////////////
-
+//Логика при нажатии кнопки изменения профиля
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
   validateInitiallyInput(formEditUser);
-  toggleButtonState(formEditUser, formEditUser.elements.submit, 'popup__save-button_invalid');
+  toggleButtonState(formEditUser, formEditUser.elements.submit, objectValidation.inactiveButtonClass);
   openPopup(popupEditProfile);
   document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupEditProfile));
 });
-
+//Логика при нажатии кнопки добавления изображения
 buttonAddImage.addEventListener('click', () => {
-  toggleButtonState(formAddImage, formAddImage.elements.submit, 'popup__save-button_invalid');
+  toggleButtonState(formAddImage, formAddImage.elements.submit, objectValidation.inactiveButtonClass);
   openPopup(popupAddImage);
   document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupAddImage));
 });
-
+//Слушатели закрытия попапов при клике по оверлею
 popupOpenedImage.addEventListener('click', (evt) => closePopup(evt.target));
 popupEditProfile.addEventListener('click', (evt) => closePopup(evt.target));
 popupAddImage.addEventListener('click', (evt) => closePopup(evt.target));
-
-
+//Слушатели закрытия попапов при клике по крестику
 buttonСlosing.addEventListener('click', () => closePopup(popupEditProfile));
-
 buttonСlosingAddImage.addEventListener('click', () => closePopup(popupAddImage));
-
 buttonСlosingImage.addEventListener('click', () => closePopup(popupOpenedImage));
-
+//Логика при нажатии кнопки Сохранить
 formElement.addEventListener('submit', sendFormSubmit);
-
 formElementAddImage.addEventListener('submit', addElement);
-
-//formEditUser.addEventListener('input', handleInput);
-//formAddImage.addEventListener('input', handleInput);
