@@ -63,7 +63,7 @@ const addElement = (evt) => {
 const renderCard = (placeRender, card) => {
   placeRender.prepend(createCard(card));
 };
-// Функция открытия Попапа
+//Функция открытия Попапа
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 };
@@ -71,7 +71,7 @@ const openPopup = (popup) => {
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
 };
-// Функция передачи текста из формы Попапа на страницу
+//Функция передачи текста из формы Попапа на страницу
 const sendFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
@@ -90,7 +90,7 @@ profileEditButton.addEventListener('click', () => {
   openPopup(popupEditProfile);
   document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupEditProfile));
 });
-//Логика при нажатии кнопки добавления изображения
+//Логика при нажатии кнопки открытия Попапа добавления изображения
 buttonAddImage.addEventListener('click', () => {
   toggleButtonState(formAddImage, formAddImage.elements.submit, objectValidation.inactiveButtonClass);
   openPopup(popupAddImage);
