@@ -47,7 +47,8 @@ const createCard = (card) => {
   //Открытие Попапа с изображением
   cardImage.addEventListener('click', () => {
     imageOpenTitle.textContent = card.name;
-    imageOpenLink.src = card.link; //За присваивание Alt отвечает 32 строка
+    imageOpenLink.src = card.link;
+    imageOpenLink.alt = card.name;
     openPopup(popupOpenedImage);
   });
   return cardElement;
@@ -98,8 +99,7 @@ cardAlbum.append(...cardElements);
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
-  const inputList = Array.from(formEditUser.querySelectorAll('.popup__input-text'));
-  inputList.forEach((inputElement) => {
+  inputListFormProfileEdit.forEach((inputElement) => {
   checkInputValidity(formEditUser, inputElement, 'popup__input-text_type_error');
 });
   toggleButtonState(inputListFormProfileEdit, buttonSubmitEditProfile, 'popup__save-button_invalid');
