@@ -18,6 +18,12 @@ const cardAlbum = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#element-template');
 const imageOpenTitle = popupOpenedImage.querySelector('.popup__image-title');
 const imageOpenLink = popupOpenedImage.querySelector('.popup__open-image');
+const popups = document.querySelectorAll('.popup');
+const formEditUser = document.forms.profile;
+const inputListFormProfileEdit = Array.from(popupEditProfile.querySelectorAll('.popup__input-text'));
+const buttonSubmitEditProfile = popupEditProfile.querySelector('.popup__save-button');
+const inputListFormAddButton = Array.from(popupAddImage.querySelectorAll('.popup__input-text'));
+const buttonSubmitAddButton = popupAddImage.querySelector('.popup__save-button');
 
 //Функция создания карточки
 const createCard = (card) => {
@@ -41,15 +47,13 @@ const createCard = (card) => {
   //Открытие Попапа с изображением
   cardImage.addEventListener('click', () => {
     imageOpenTitle.textContent = card.name;
-    imageOpenLink.src = card.link;
+    imageOpenLink.src = card.link; //За присваивание Alt отвечает 32 строка
     openPopup(popupOpenedImage);
-    document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupOpenedImage));
   });
-
   return cardElement;
 };
 //Добавление новой карточки
-const addElement = (evt) => {
+const handleAddImageFormSubmit = (evt) => {
   evt.preventDefault();
   const object = {
     name: placeInput.value,
@@ -57,22 +61,31 @@ const addElement = (evt) => {
   };
   renderCard(cardAlbum, object);
   closePopup(popupAddImage);
-  document.querySelector('.popup__form_type_add-image').reset();
+  evt.target.reset();
 };
 //Функция отрисовки новой карточки
 const renderCard = (placeRender, card) => {
   placeRender.prepend(createCard(card));
 };
+//Функция закрытия Попапов при нажатии клавиши Escape
+const closePopupEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
 //Функция открытия Попапа
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEscape);
 };
 //Функция закрытия Попапа
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscape);
 };
 //Функция передачи текста из формы Попапа на страницу
-const sendFormSubmit = (evt) => {
+const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = professionInput.value;
@@ -85,25 +98,29 @@ cardAlbum.append(...cardElements);
 profileEditButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   professionInput.value = profileProfession.textContent;
-  validateInitiallyInput(formEditUser);
-  toggleButtonState(formEditUser, formEditUser.elements.submit, objectValidation.inactiveButtonClass);
+  const inputList = Array.from(formEditUser.querySelectorAll('.popup__input-text'));
+  inputList.forEach((inputElement) => {
+  checkInputValidity(formEditUser, inputElement, 'popup__input-text_type_error');
+});
+  toggleButtonState(inputListFormProfileEdit, buttonSubmitEditProfile, 'popup__save-button_invalid');
   openPopup(popupEditProfile);
-  document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupEditProfile));
 });
 //Логика при нажатии кнопки открытия Попапа добавления изображения
 buttonAddImage.addEventListener('click', () => {
-  toggleButtonState(formAddImage, formAddImage.elements.submit, objectValidation.inactiveButtonClass);
+  toggleButtonState(inputListFormAddButton, buttonSubmitAddButton, 'popup__save-button_invalid');
   openPopup(popupAddImage);
-  document.addEventListener('keydown', (evt) => closePopupEscape(evt, popupAddImage));
 });
-//Слушатели закрытия попапов при клике по оверлею
-popupOpenedImage.addEventListener('click', (evt) => closePopup(evt.target));
-popupEditProfile.addEventListener('click', (evt) => closePopup(evt.target));
-popupAddImage.addEventListener('click', (evt) => closePopup(evt.target));
-//Слушатели закрытия попапов при клике по крестику
-buttonСlosing.addEventListener('click', () => closePopup(popupEditProfile));
-buttonСlosingAddImage.addEventListener('click', () => closePopup(popupAddImage));
-buttonСlosingImage.addEventListener('click', () => closePopup(popupOpenedImage));
+//Логика закрытия Попапов
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+          closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup)
+      }
+  })
+})
 //Логика при нажатии кнопки Сохранить
-formElement.addEventListener('submit', sendFormSubmit);
-formElementAddImage.addEventListener('submit', addElement);
+formElement.addEventListener('submit', handleProfileFormSubmit);
+formElementAddImage.addEventListener('submit', handleAddImageFormSubmit);
