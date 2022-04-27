@@ -20,6 +20,7 @@ const imageOpenTitle = popupOpenedImage.querySelector('.popup__image-title');
 const imageOpenLink = popupOpenedImage.querySelector('.popup__open-image');
 const popups = document.querySelectorAll('.popup');
 const formEditUser = document.forms.profile;
+const formAddImage = document.forms.add;
 const inputListFormProfileEdit = Array.from(popupEditProfile.querySelectorAll('.popup__input-text'));
 const buttonSubmitEditProfile = popupEditProfile.querySelector('.popup__save-button');
 const inputListFormAddButton = Array.from(popupAddImage.querySelectorAll('.popup__input-text'));
@@ -107,6 +108,10 @@ profileEditButton.addEventListener('click', () => {
 });
 //Логика при нажатии кнопки открытия Попапа добавления изображения
 buttonAddImage.addEventListener('click', () => {
+  inputListFormAddButton.forEach((inputElement) => {
+  hideInputError('popup__input-text_type_error', formAddImage, inputElement);
+  });
+  formAddImage.reset();
   toggleButtonState(inputListFormAddButton, buttonSubmitAddButton, 'popup__save-button_invalid');
   openPopup(popupAddImage);
 });
@@ -114,7 +119,7 @@ buttonAddImage.addEventListener('click', () => {
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened')) {
-          closePopup(popup)
+        closePopup(popup)
       }
       if (evt.target.classList.contains('popup__close-button')) {
         closePopup(popup)
