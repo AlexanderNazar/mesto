@@ -29,7 +29,6 @@ const initialCards = [
 ];
 
 const selectorsCard = {
-  cardContainer: '.elements',
   cardTemplate: '#element-template',
   cardContent: '.element',
   cardTitle: '.element__title',
@@ -73,6 +72,8 @@ const professionInput = popupEditProfile.querySelector('input[name=profession]')
 const placeInput = document.querySelector('input[name=place]');
 const linkInput = popupAddImage.querySelector('input[name=link]');
 
+const cardContainer = document.querySelector('.elements');
+
 //Функция открытия Попапа
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
@@ -101,12 +102,14 @@ popups.forEach((popup) => {
       }
   })
 })
-//Создаем экземпляры класса Кард и отрисовываем из объекта initialCards на страницу
-initialCards.forEach((item) => {
+//Функция создания карточки
+const createCard = (item) => {
   const card = new Card(item, selectorsCard, openPopup);
   const cardElement = card.generateCard();
-  document.querySelector(selectorsCard.cardContainer).append(cardElement);
-})
+  return cardElement;
+  }
+//Создаем экземпляры класса Кард и отрисовываем из объекта initialCards на страницу
+initialCards.forEach(item => cardContainer.append(createCard(item)));
 //Создаем экземпляры класса Валидации
 const validationFormEditUser = new FormValitation(selectorsForm, formEditUser);
 const validationFormAddImage = new FormValitation(selectorsForm, formAddImage);
@@ -142,9 +145,7 @@ const handleAddImageFormSubmit = (evt) => {
     name: placeInput.value,
     link: linkInput.value
   };
-  const card = new Card(object, selectorsCard, openPopup);
-  const cardElement = card.generateCard();
-  document.querySelector(selectorsCard.cardContainer).prepend(cardElement);
+  cardContainer.prepend(createCard(object));
   closePopup(popupAddImage);
   evt.target.reset();
 }

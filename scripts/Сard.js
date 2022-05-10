@@ -9,9 +9,9 @@ export default class Card {
     this._cardHeart = selectorsCard.cardHeart;
     this._cardHeartActive = selectorsCard.cardHeartActive;
     this._cardButtonDelete = selectorsCard.cardButtonDelete;
-    this._popupPreview = selectorsCard.popupPreview;
-    this._popupPreviewTitle = selectorsCard.popupPreviewTitle;
-    this._popupPreviewLink = selectorsCard.popupPreviewLink;
+    this._popupOpenedImage = document.querySelector(selectorsCard.popupPreview);
+    this._imageOpenTitle = document.querySelector(selectorsCard.popupPreviewTitle);
+    this._imageOpenLink = document.querySelector(selectorsCard.popupPreviewLink);
     this._functionOpenCard = functionOpenCard;
   }
   //Метод получения из шаблона элемент Карточки
@@ -61,14 +61,10 @@ export default class Card {
   }
   //Метод открытия просмотра Превью изображения
   _openPreview = () => {
-    const popupOpenedImage = document.querySelector(this._popupPreview);
-    const imageOpenTitle = popupOpenedImage.querySelector(this._popupPreviewTitle);
-    const imageOpenLink = popupOpenedImage.querySelector(this._popupPreviewLink);
-
-    imageOpenTitle.textContent = this._name;
-    imageOpenLink.src = this._link;
-    imageOpenLink.alt = this._name;
-    this._functionOpenCard(popupOpenedImage);
+    this._imageOpenTitle.textContent = this._name;
+    this._imageOpenLink.src = this._link;
+    this._imageOpenLink.alt = this._name;
+    this._functionOpenCard(this._popupOpenedImage);
   }
   //Метод установки слушателя открытия Превью на элемент картинку
   _setOpenPreviewImageEventListener = () => {
