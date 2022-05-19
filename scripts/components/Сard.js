@@ -1,6 +1,6 @@
 export default class Card {
-  constructor(initialCards, selectorsCard, functionOpenCard) {
-    this._name = initialCards.name;
+  constructor(initialCards, selectorsCard, { handleCardClick }) {
+    this._name = initialCards.place;
     this._link = initialCards.link;
     this._cardTemplate = selectorsCard.cardTemplate;
     this._cardContent = selectorsCard.cardContent;
@@ -9,10 +9,7 @@ export default class Card {
     this._cardHeart = selectorsCard.cardHeart;
     this._cardHeartActive = selectorsCard.cardHeartActive;
     this._cardButtonDelete = selectorsCard.cardButtonDelete;
-    this._popupOpenedImage = document.querySelector(selectorsCard.popupPreview);
-    this._imageOpenTitle = document.querySelector(selectorsCard.popupPreviewTitle);
-    this._imageOpenLink = document.querySelector(selectorsCard.popupPreviewLink);
-    this._functionOpenCard = functionOpenCard;
+    this._functionOpenCard = handleCardClick;
   }
   //Метод получения из шаблона элемент Карточки
   _getTemplate = () => {
@@ -59,16 +56,9 @@ export default class Card {
     const deleteButton = this._element.querySelector(this._cardButtonDelete);
     deleteButton.addEventListener('click', this._deleteImage);
   }
-  //Метод открытия просмотра Превью изображения
-  _openPreview = () => {
-    this._imageOpenTitle.textContent = this._name;
-    this._imageOpenLink.src = this._link;
-    this._imageOpenLink.alt = this._name;
-    this._functionOpenCard(this._popupOpenedImage);
-  }
   //Метод установки слушателя открытия Превью на элемент картинку
   _setOpenPreviewImageEventListener = () => {
     const cardImage = this._element.querySelector(this._cardImage);
-    cardImage.addEventListener('click', this._openPreview);
+    cardImage.addEventListener('click', () => this._functionOpenCard());
   }
 }
