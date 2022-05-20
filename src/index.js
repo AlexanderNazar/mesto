@@ -1,15 +1,15 @@
-
+import './pages/index.css';
 import { profileEditButton, buttonAddImage, buttonSubmitEditProfile, buttonSubmitAddButton, formEditUser,
-  formAddImage, inputListFormProfileEdit, inputListFormAddButton, nameInput, professionInput, cardContainer} from '../utils/constants.js';
-import { initialCards } from '../utils/initialCards.js';
-import { selectorsCard } from '../utils/cardConfig.js';
-import { selectorsForm } from '../utils/validationConfig.js';
-import Card from '../components/Сard.js';
-import FormValitation from '../components/FormValidator.js';
-import Section from '../components/Section.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
+  formAddImage, inputListFormProfileEdit, inputListFormAddButton, nameInput, professionInput, cardContainer} from './scripts/utils/constants.js';
+import { initialCards } from './scripts/utils/initialCards.js';
+import { selectorsCard } from './scripts/utils/cardConfig.js';
+import { selectorsForm } from './scripts/utils/validationConfig.js';
+import Card from './scripts/components/Сard.js';
+import FormValitation from './scripts/components/FormValidator.js';
+import Section from './scripts/components/Section.js';
+import PopupWithImage from './scripts/components/PopupWithImage.js';
+import PopupWithForm from './scripts/components/PopupWithForm.js';
+import UserInfo from './scripts/components/UserInfo.js';
 
 const renderCards = new Section({
   items: initialCards,
