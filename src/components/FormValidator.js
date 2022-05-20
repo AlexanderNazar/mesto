@@ -1,10 +1,12 @@
 export default class FormValitation {
   constructor(selectorsForm, formElement) {
+    this._formElement = formElement;
     this._inputSelector = selectorsForm.inputSelector;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._submitButtonSelector = selectorsForm.submitButtonSelector;
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     this._inactiveButtonClass = selectorsForm.inactiveButtonClass;
     this._inputErrorClass = selectorsForm.inputErrorClass;
-    this._formElement = formElement;
   }
   //Метод установки валидации на форму
   enableValidation = () => {
@@ -12,13 +14,11 @@ export default class FormValitation {
   }
   //Метод установки слушателя добавления валидации
   _setEventListeners = () => {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this.toggleButtonState(inputList, buttonElement);
-    inputList.forEach((inputElement) => {
+    this.toggleButtonState();
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this.checkInputValidity(inputElement);
-        this.toggleButtonState(inputList, buttonElement, this._inactiveButtonClass);
+        this.toggleButtonState();
       })
     })
   }
@@ -35,25 +35,29 @@ export default class FormValitation {
     errorElement.textContent = '';
   }
   //Метод, проверяющий валидность всей формы
-  _hasInvalidInput = (inputList) => {
-    return inputList.some(inputElement => !inputElement.validity.valid)
+  _hasInvalidInput = () => {
+    return this._inputList.some(inputElement => !inputElement.validity.valid)
   }
   //Метод включения и отключения кнопки Сохранить
-  toggleButtonState = (inputList, buttonElement) => {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.disabled = true;
+  toggleButtonState = () => {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
-  //Метод, включающий или выключающий валидацию инпатов, в зависимости от их валидности
+  //Метод, включающий или выключающий валидацию инпата, в зависимости от его валидности
   checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
     } else {
       this.hideInputError(inputElement);
     }
+  }
+  //Метод, включающий или выключающий валидацию всех инпатов формы, в зависимости от их валидности
+  checkAllInputValidity = () => {
+    this._inputList.forEach(inputElement => this.checkInputValidity(inputElement));
   }
 }

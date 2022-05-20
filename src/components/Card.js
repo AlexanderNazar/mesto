@@ -39,13 +39,14 @@ export default class Card {
     return this._element;
   }
   //Метод Лайка карточки
-  _turnLikeButton = (evt) => {
-    evt.target.classList.toggle(this._cardHeartActive);
+  _turnLikeButton = () => {
+    this._likeButton = this._element.querySelector(this._cardHeart);
+    this._likeButton.classList.toggle(this._cardHeartActive);
   }
   //Метод установки слушателя Лайка на элемент сердечка
   _setLikeEventListener = ()  => {
-    const likeButton = this._element.querySelector(this._cardHeart);
-    likeButton.addEventListener('click', this._turnLikeButton);
+    this._likeButton = this._element.querySelector(this._cardHeart);
+    this._likeButton.addEventListener('click', this._turnLikeButton);
   }
   //Метод удаления карточки
   _deleteImage = () => {
