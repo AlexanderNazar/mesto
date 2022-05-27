@@ -65,7 +65,7 @@ profileEditButton.addEventListener('click', () => {
   validationFormEditUser.toggleButtonState();
   popupEditProfileClass.open();
 })
-//Подключаем слушатели на кнопку открытия Попапа изменения профиля
+//Подключаем слушатели на кнопку открытия Попапа добавления карточки
 buttonAddImage.addEventListener('click', () => {
   inputListFormAddButton.forEach(inputElement => validationFormAddImage.hideInputError(inputElement));
   validationFormAddImage.toggleButtonState();

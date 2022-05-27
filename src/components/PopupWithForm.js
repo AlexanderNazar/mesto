@@ -15,9 +15,7 @@ export default class PopupWithForm extends Popup {
   //Метод, возвращающий Объект со значениями Инпатов формы
   _getInputValues = () => {
       const returnObject = {};
-      for (let i = 0; i < this._inputList.length; i++){
-          returnObject[this._inputList[i]['name']] = this._inputList[i]['value'];
-      }
+      this._inputList.forEach(input => returnObject[input.name] = input.value)
       return returnObject;
   }
   //Метод, подключающий слушатель на закрытие Попапа по Крестику и Оверлею, а также Сабмита формы
