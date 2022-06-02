@@ -1,18 +1,18 @@
-import { profileName, profileProfession} from '../utils/constants.js';
+import { profileName, profileAbout} from '../utils/constants.js';
 
 export default class UserInfo {
-  constructor({ name, profession }) {
-    this._name = name;
-    this._profession = profession;
+  constructor(data) {
+    this._name = data.name;
+    this._about = data.about;
   }
   //Метод передачи данных профиля со страницы в значения Инпатов формы
-  getUserInfo = () => {
+  /*getUserInfo = () => {
     this._name.value = profileName.textContent;
-    this._profession.value = profileProfession.textContent;
-  }
+    this._about.value = profileAbout.textContent;
+  }*/
   //Метод передачи значений объекта с данными профиля на страницу
-  setUserInfo = ({ name, profession }) => {
-    profileName.textContent = name;
-    profileProfession.textContent = profession;
+  setUserInfo = () => {
+    profileName.textContent = this._name;
+    profileAbout.textContent = this._about;
   }
 }

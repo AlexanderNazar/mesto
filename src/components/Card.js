@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(initialCards, selectorsCard, { handleCardClick }) {
+  constructor(initialCards, selectorsCard, { handleCardClick, handleDeleteClick }) {
     this._name = initialCards.place;
     this._link = initialCards.link;
     this._cardTemplate = selectorsCard.cardTemplate;
@@ -10,6 +10,7 @@ export default class Card {
     this._cardHeartActive = selectorsCard.cardHeartActive;
     this._cardButtonDelete = selectorsCard.cardButtonDelete;
     this._functionOpenCard = handleCardClick;
+    this._functionOpenPopupConfirm = handleDeleteClick;
   }
   //Метод получения из шаблона элемент Карточки
   _getTemplate = () => {
@@ -49,13 +50,13 @@ export default class Card {
     this._likeButton.addEventListener('click', this._turnLikeButton);
   }
   //Метод удаления карточки
-  _deleteImage = () => {
-    this._element.remove()
+  deleteImage = () => {
+    this._element.remove();
   }
   //Метод установки слушателя Удаления на элемент удаления
   _setDeleteImageEventListener = () => {
     const deleteButton = this._element.querySelector(this._cardButtonDelete);
-    deleteButton.addEventListener('click', this._deleteImage);
+    deleteButton.addEventListener('click', () => this._functionOpenPopupConfirm());
   }
   //Метод установки слушателя открытия Превью на элемент картинку
   _setOpenPreviewImageEventListener = () => {
