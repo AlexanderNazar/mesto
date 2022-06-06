@@ -1,11 +1,11 @@
 export default class Section {
-  constructor({ items, renderer }, containerSelector) {
-    this._initialCards = items;
+  constructor({ renderer }, containerSelector) {
     this._renderer = renderer;
     this._container = containerSelector;
   }
   //Метод отрисовки карточек на страницу
-  renderItems = () => {
+  renderItems = (items) => {
+    this._initialCards = items;
     this._initialCards.forEach(item => this._container.append(this._renderer(item)));
   }
   //Метод добавления карточки настраницу

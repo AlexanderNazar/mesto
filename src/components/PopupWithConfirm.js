@@ -24,7 +24,7 @@ export default class PopupWithConfirm extends Popup {
     }
   }
   //Метод, подключающий слушатель на закрытие Попапа по Крестику и Оверлею, а также подтверждение удаления карточки
-  setEventListeners = () => {
+  setEventListeners() {
     super.setEventListeners();
 
     this._buttonDelete.addEventListener('click', () => {

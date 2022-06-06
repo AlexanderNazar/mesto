@@ -1,7 +1,6 @@
 import './index.css';
-import { profileEditButton, buttonAddImage, avatarUpdateButton, formEditUser,
-  formAddImage, inputListFormAddButton, nameInput, aboutInput, profileName, profileAbout, cardContainer} from '../utils/constants.js';
-import { initialCards } from '../utils/initialCards.js';
+import { profileEditButton, buttonAddImage, avatarUpdateButton, formEditUser, formUpdateAvatar,
+  formAddImage, inputUpdateAvatar, inputListFormAddButton, avatarElement, cardContainer } from '../utils/constants.js';
 import { selectorsCard } from '../utils/cardConfig.js';
 import { selectorsForm } from '../utils/validationConfig.js';
 import Card from '../components/Card.js';
@@ -9,9 +8,8 @@ import FormValitation from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithConfirm from '../components/PopupWithConfirm.js'
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import UserInfo from '../components/UserInfo.js';
-import Popup from '../components/Popup.js';
 import Api from '../components/Api.js';
 
 const api = new Api({
@@ -22,17 +20,24 @@ const api = new Api({
   }
 });
 
+let userId;
+
+const userInfo = new UserInfo();
+
+//Получаем значения профиля с  сервера
 api.setUserInfo()
   .then(data => {
-    const userInfo = new UserInfo(data)
-    userInfo.setUserInfo()
+    avatarElement.src = data.avatar;
+    userInfo.setUserInfo(data);
+    userId = data._id;
   })
-  .catch(err => console.log(`Ошибка: ${err.status}`));
+  .catch(err => console.log(err));
 
 const renderCards = new Section({
-  items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, selectorsCard, {
+    const card = new Card(item, selectorsCard, userId, {
+      apiPutLike: () => api.putLike(item._id),
+      apiDeleteLike: () => api.deleteLike(item._id),
       handleCardClick: () => {
         const imagePreview = new PopupWithImage('.popup_type_preview');
         imagePreview.open(item);
@@ -40,7 +45,11 @@ const renderCards = new Section({
       },
       handleDeleteClick: () => {
         const popupConfirm = new PopupWithConfirm({
-          deleteCard: () => card.deleteImage()
+          deleteCard: () => {
+            api.deleteImage(item._id)
+            .catch(err => console.log(err));
+            card.deleteImage();
+          }
         },
         '.popup_type_confirm');
         popupConfirm.open();
@@ -51,76 +60,84 @@ const renderCards = new Section({
     return cardElement;
   }},
   cardContainer
-)
-//Отрисовываем карточки из массива на страницу
-renderCards.renderItems();
+);
 
-
-//api.getUserInfo().then(data => userInfo.setUserInfo(data))
-
+//Отрисовываем карточки с сервера
+api.getInitialCards()
+  .then(data => renderCards.renderItems(data))
+  .catch(err => console.log(err))
 
 const validationFormEditUser = new FormValitation(selectorsForm, formEditUser);
 const validationFormAddImage = new FormValitation(selectorsForm, formAddImage);
+const validationFormUpdateAvatar = new FormValitation(selectorsForm, formUpdateAvatar);
+
 //Подключаем валидацию к формам
 validationFormEditUser.enableValidation();
 validationFormAddImage.enableValidation();
-
+validationFormUpdateAvatar.enableValidation();
 
 const popupEditProfileClass = new PopupWithForm({
   submitForm: (inputValueOject) => {
-    console.log(inputValueOject)
-    console.log(inputValueOject.name)
-    console.log(inputValueOject.about)
-
     api.changeUserInfo(inputValueOject)
-      .then(data => {
-        console.log(data);
-        const userInfo = new UserInfo(data);
-        userInfo.setUserInfo();
-      })
-      .catch(err => console.log(err));
-    popupEditProfileClass.close();
+      .then(data => userInfo.setUserInfo(data))
+      .catch(err => console.log(err))
+      .finally(popupEditProfileClass.visualizeLoading('Сохранение...'))
+    popupEditProfileClass.close()
   }},
   '.popup_type_profile'
 )
 
 const popupAddImageClass = new PopupWithForm({
-  submitForm: (inputValueOject) => {
-    renderCards.addItem(inputValueOject);
-    popupAddImageClass.close();
-  }},
+  submitForm: (data) => {
+    api.addCard(data)
+      .then(data => {
+        renderCards.addItem(data);
+        popupAddImageClass.close()
+      })
+      .catch(err => console.log(err))
+      .finally(popupAddImageClass.visualizeLoading('Сохранение...'))
+    }},
   '.popup_type_add-image'
-)
+  )
 
-
-const popupUpdateAvatarClass = new Popup('.popup_type_update-avatar');
+const popupUpdateAvatarClass = new PopupWithForm({
+  submitForm: (inputValueOject) => {
+    api.updateAvatar(inputValueOject)
+      .then(data => {
+        avatarElement.src = data.avatar;
+        popupUpdateAvatarClass.close()
+      })
+      .catch(err => console.log(err))
+      .finally(popupUpdateAvatarClass.visualizeLoading('Сохранение...'))
+    }},
+    '.popup_type_update-avatar'
+  )
 
 //Подключаем слушатели на Попапы с формами
 popupEditProfileClass.setEventListeners();
 popupAddImageClass.setEventListeners();
-
-
 popupUpdateAvatarClass.setEventListeners();
-
 
 //Подключаем слушатели на кнопку открытия Попапа изменения профиля
 profileEditButton.addEventListener('click', () => {
-  /*api.getUserInfo().then(data => {
-    const userInfo = new UserInfo(data)
-    userInfo.getUserInfo(data)
-  })*/
-  nameInput.value = profileName.textContent;
-  aboutInput.value = profileAbout.textContent;
-  //userInfo.getUserInfo();
+  userInfo.getUserInfo();
   validationFormEditUser.checkAllInputValidity();
   validationFormEditUser.toggleButtonState();
+  popupEditProfileClass.visualizeLoading('Сохранить');
   popupEditProfileClass.open();
 })
+
 //Подключаем слушатели на кнопку открытия Попапа добавления карточки
 buttonAddImage.addEventListener('click', () => {
   inputListFormAddButton.forEach(inputElement => validationFormAddImage.hideInputError(inputElement));
   validationFormAddImage.toggleButtonState();
+  popupAddImageClass.visualizeLoading('Создать');
   popupAddImageClass.open();
 })
-
-avatarUpdateButton.addEventListener('click', () => popupUpdateAvatarClass.open())
+//Подключаем слушатели на кнопку открытия Попапа изменения аватара
+avatarUpdateButton.addEventListener('click', () => {
+  validationFormUpdateAvatar.hideInputError(inputUpdateAvatar);
+  validationFormUpdateAvatar.toggleButtonState();
+  popupUpdateAvatarClass.visualizeLoading('Сохранить');
+  popupUpdateAvatarClass.open();
+})

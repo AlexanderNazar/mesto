@@ -9,8 +9,8 @@ export default class PopupWithImage extends Popup {
   //Метод открытия Превью изображения
   open = (cardElement) => {
     super.open();
-    this._imageOpenTitle.textContent = cardElement.place;
+    this._imageOpenTitle.textContent = cardElement.name;
     this._imageOpenLink.src = cardElement.link;
-    this._imageOpenLink.alt = cardElement.place;
+    this._imageOpenLink.alt = cardElement.name;
     }
 }

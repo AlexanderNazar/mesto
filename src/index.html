@@ -16,14 +16,14 @@
     <main class="content">
       <section class="profile">
         <div class="profile__avatar-container">
-          <img src="<%=require('./images/avatar.png')%>" alt="Фото пользовантеля" class="profile__avatar">
+          <img src="<%=require('./images/avatar-loading.svg')%>"" alt="Фото пользовантеля" class="profile__avatar">
         </div>
         <div class="profile__info">
           <div class="profile__title">
-            <h1 class="profile__name">Саша Назаров</h1>
+            <h1 class="profile__name"></h1>
             <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
           </div>
-          <p class="profile__about">Исследователь мира</p>
+          <p class="profile__about"></p>
         </div>
         <button type="button" class="profile__add-button" aria-label="Добавить"></button>
       </section>
@@ -71,22 +71,22 @@
         <h2 class="popup__title">Новое место</h2>
         <input
         type="text"
-        id="place"
+        id="name"
         class="popup__input-text"
-        name="place"
+        name="name"
         required
         placeholder="Название"
         minlength="2"
         maxlength="30">
-        <span id="place-error" class="popup__error"></span>
+        <span id="name-error" class="popup__error"></span>
         <input
         type="url"
-        id="url"
+        id="link"
         class="popup__input-text"
         name="link"
         required
         placeholder="Ссылка на картинку">
-        <span id="url-error" class="popup__error"></span>
+        <span id="link-error" class="popup__error"></span>
         <button type="submit" class="popup__save-button" name="submit">Создать</button>
       </form>
     </div>
@@ -131,7 +131,7 @@
         <h2 class="element__title"></h2>
         <div class="element__heart-container">
           <button class="element__heart" type="button"></button>
-          <p class="element__heart-counter">1</p>
+          <p class="element__heart-counter"></p>
         </div>
       </div>
     </div>

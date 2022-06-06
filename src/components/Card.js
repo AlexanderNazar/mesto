@@ -1,7 +1,7 @@
 export default class Card {
-  constructor(initialCards, selectorsCard, { handleCardClick, handleDeleteClick }) {
-    this._name = initialCards.place;
-    this._link = initialCards.link;
+  constructor(data, selectorsCard, userId, {apiPutLike, apiDeleteLike, handleCardClick, handleDeleteClick }) {
+    this._name = data.name;
+    this._link = data.link;
     this._cardTemplate = selectorsCard.cardTemplate;
     this._cardContent = selectorsCard.cardContent;
     this._cardTitle = selectorsCard.cardTitle;
@@ -9,11 +9,17 @@ export default class Card {
     this._cardHeart = selectorsCard.cardHeart;
     this._cardHeartActive = selectorsCard.cardHeartActive;
     this._cardButtonDelete = selectorsCard.cardButtonDelete;
+    this._cardCounterLike = selectorsCard.cardCounterLike;
+    this._myId = userId;
+    this._ownerId = data.owner._id;
+    this._likes = data.likes;
+    this._apiPutLike = apiPutLike;
+    this._apiDeleteLike = apiDeleteLike;
     this._functionOpenCard = handleCardClick;
     this._functionOpenPopupConfirm = handleDeleteClick;
   }
   //Метод получения из шаблона элемент Карточки
-  _getTemplate = () => {
+  _getTemplate() {
     const cardElement = document
     .querySelector(this._cardTemplate)
     .content
@@ -23,44 +29,67 @@ export default class Card {
     return cardElement;
   }
   //Метод создания карточки
-  generateCard = () => {
+  generateCard() {
     this._element = this._getTemplate();
+    this._cardCounterLikeElement = this._element.querySelector(this._cardCounterLike);
 
     this._setLikeEventListener();
     this._setDeleteImageEventListener();
     this._setOpenPreviewImageEventListener();
 
-    const titleImage = this._element.querySelector(this._cardTitle);
-    const cardImage = this._element.querySelector(this._cardImage);
+    this._titleImage = this._element.querySelector(this._cardTitle);
 
-    titleImage.textContent = this._name;
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
+    this._titleImage.textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+
+    this._cardCounterLikeElement.textContent = this._likes.length;
+
+    if (!(this._myId === this._ownerId)) {
+      this._deleteButton.style.display = 'none';
+    }
+
+    if (this._likes.find((obj) => this._myId === obj._id)) {
+      this._likeButton.classList.add(this._cardHeartActive);
+    }
 
     return this._element;
   }
   //Метод Лайка карточки
   _turnLikeButton = () => {
-    this._likeButton = this._element.querySelector(this._cardHeart);
-    this._likeButton.classList.toggle(this._cardHeartActive);
-  }
+    if (!this._likeButton.classList.contains(this._cardHeartActive)) {
+      this._apiPutLike()
+      .then((data) => {
+        this._cardCounterLikeElement.textContent = data.likes.length;
+      })
+      .catch(err => console.log(err));
+      this._likeButton.classList.add(this._cardHeartActive);
+    } else {
+      this._apiDeleteLike()
+        .then((data) => {
+          this._cardCounterLikeElement.textContent = data.likes.length;
+        })
+      .catch(err => console.log(err));
+      this._likeButton.classList.remove(this._cardHeartActive);
+    }}
+
   //Метод установки слушателя Лайка на элемент сердечка
-  _setLikeEventListener = ()  => {
+  _setLikeEventListener() {
     this._likeButton = this._element.querySelector(this._cardHeart);
     this._likeButton.addEventListener('click', this._turnLikeButton);
   }
   //Метод удаления карточки
-  deleteImage = () => {
+  deleteImage() {
     this._element.remove();
   }
   //Метод установки слушателя Удаления на элемент удаления
-  _setDeleteImageEventListener = () => {
-    const deleteButton = this._element.querySelector(this._cardButtonDelete);
-    deleteButton.addEventListener('click', () => this._functionOpenPopupConfirm());
+  _setDeleteImageEventListener() {
+    this._deleteButton = this._element.querySelector(this._cardButtonDelete);
+    this._deleteButton.addEventListener('click', () => this._functionOpenPopupConfirm());
   }
   //Метод установки слушателя открытия Превью на элемент картинку
-  _setOpenPreviewImageEventListener = () => {
-    const cardImage = this._element.querySelector(this._cardImage);
-    cardImage.addEventListener('click', () => this._functionOpenCard());
+  _setOpenPreviewImageEventListener() {
+    this._cardImage = this._element.querySelector(this._cardImage);
+    this._cardImage.addEventListener('click', () => this._functionOpenCard());
   }
 }

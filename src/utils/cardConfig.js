@@ -6,4 +6,5 @@ export const selectorsCard = {
   cardHeart: '.element__heart',
   cardHeartActive: 'element__heart_active',
   cardButtonDelete: '.element__delete',
+  cardCounterLike: '.element__heart-counter'
 }
