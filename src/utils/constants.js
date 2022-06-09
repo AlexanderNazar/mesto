@@ -1,13 +1,9 @@
 const popupEditProfile = document.querySelector('.popup_type_profile');
 const popupAddImage = document.querySelector('.popup_type_add-image');
 
-const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__about');
-
 const profileEditButton = document.querySelector('.profile__edit-button');
 const buttonAddImage = document.querySelector('.profile__add-button');
 const avatarUpdateButton = document.querySelector('.profile__avatar-container')
-const avatarElement = document.querySelector('.profile__avatar');
 
 const formEditUser = document.forms.profile;
 const formAddImage = document.forms.add;
@@ -21,5 +17,5 @@ const aboutInput = popupEditProfile.querySelector('input[name=about]');
 
 const cardContainer = document.querySelector('.elements');
 
-export { popupEditProfile, popupAddImage, profileName, profileAbout, profileEditButton, avatarElement, formUpdateAvatar, inputUpdateAvatar,
+export { popupEditProfile, popupAddImage, profileEditButton, formUpdateAvatar, inputUpdateAvatar,
 buttonAddImage, avatarUpdateButton, formEditUser, formAddImage, inputListFormAddButton, nameInput, aboutInput, cardContainer}

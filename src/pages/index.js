@@ -1,6 +1,6 @@
 import './index.css';
 import { profileEditButton, buttonAddImage, avatarUpdateButton, formEditUser, formUpdateAvatar,
-  formAddImage, inputUpdateAvatar, inputListFormAddButton, avatarElement, cardContainer } from '../utils/constants.js';
+  formAddImage, inputUpdateAvatar, inputListFormAddButton, cardContainer } from '../utils/constants.js';
 import { selectorsCard } from '../utils/cardConfig.js';
 import { selectorsForm } from '../utils/validationConfig.js';
 import Card from '../components/Card.js';
@@ -11,6 +11,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import Element from '../components/Element.js';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
@@ -22,22 +23,26 @@ const api = new Api({
 
 let userId;
 
-const userInfo = new UserInfo();
+const userInfo = new UserInfo('.profile');
 
-//Получаем значения профиля с  сервера
-api.setUserInfo()
-  .then(data => {
-    avatarElement.src = data.avatar;
+Promise.all([ api.setUserInfo(), api.getInitialCards()])
+  .then(([ data, cards ]) => {
+    userInfo.updateAvatar(data);
     userInfo.setUserInfo(data);
     userId = data._id;
+    renderCards.renderItems(cards);
   })
-  .catch(err => console.log(err));
+  .catch(err => console.log(err))
 
-const renderCards = new Section({
+  const renderCards = new Section({
   renderer: (item) => {
     const card = new Card(item, selectorsCard, userId, {
-      apiPutLike: () => api.putLike(item._id),
-      apiDeleteLike: () => api.deleteLike(item._id),
+      changeLikePosition: (item) => {
+        api.changeLikePosition(item._id, !card.isLiked())
+        .then(data => card.turnLikeButton(data))
+        .catch(err => console.log(err))
+      },
+      handleHideElement: (element) => new Element(element).hideElement(),
       handleCardClick: () => {
         const imagePreview = new PopupWithImage('.popup_type_preview');
         imagePreview.open(item);
@@ -47,13 +52,18 @@ const renderCards = new Section({
         const popupConfirm = new PopupWithConfirm({
           deleteCard: () => {
             api.deleteImage(item._id)
-            .catch(err => console.log(err));
-            card.deleteImage();
+            .then(data => {
+              card.deleteImage();
+              popupConfirm.close()
+            })
+            .catch(err => console.log(err))
+            .finally(popupConfirm.visualizeLoading('Удаление...'))
           }
         },
         '.popup_type_confirm');
-        popupConfirm.open();
+        popupConfirm.visualizeLoading('Да')
         popupConfirm.setEventListeners();
+        popupConfirm.open();
       }
     });
     const cardElement = card.generateCard();
@@ -61,11 +71,6 @@ const renderCards = new Section({
   }},
   cardContainer
 );
-
-//Отрисовываем карточки с сервера
-api.getInitialCards()
-  .then(data => renderCards.renderItems(data))
-  .catch(err => console.log(err))
 
 const validationFormEditUser = new FormValitation(selectorsForm, formEditUser);
 const validationFormAddImage = new FormValitation(selectorsForm, formAddImage);
@@ -79,10 +84,12 @@ validationFormUpdateAvatar.enableValidation();
 const popupEditProfileClass = new PopupWithForm({
   submitForm: (inputValueOject) => {
     api.changeUserInfo(inputValueOject)
-      .then(data => userInfo.setUserInfo(data))
+      .then(data => {
+        userInfo.setUserInfo(data);
+        popupEditProfileClass.close()
+      })
       .catch(err => console.log(err))
       .finally(popupEditProfileClass.visualizeLoading('Сохранение...'))
-    popupEditProfileClass.close()
   }},
   '.popup_type_profile'
 )
@@ -104,7 +111,8 @@ const popupUpdateAvatarClass = new PopupWithForm({
   submitForm: (inputValueOject) => {
     api.updateAvatar(inputValueOject)
       .then(data => {
-        avatarElement.src = data.avatar;
+        userInfo.updateAvatar(data)
+        //avatarElement.src = data.avatar;
         popupUpdateAvatarClass.close()
       })
       .catch(err => console.log(err))

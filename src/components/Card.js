@@ -1,5 +1,6 @@
 export default class Card {
-  constructor(data, selectorsCard, userId, {apiPutLike, apiDeleteLike, handleCardClick, handleDeleteClick }) {
+  constructor(data, selectorsCard, userId, {changeLikePosition, handleHideElement, handleCardClick, handleDeleteClick }) {
+    this._card = data;
     this._name = data.name;
     this._link = data.link;
     this._cardTemplate = selectorsCard.cardTemplate;
@@ -13,10 +14,10 @@ export default class Card {
     this._myId = userId;
     this._ownerId = data.owner._id;
     this._likes = data.likes;
-    this._apiPutLike = apiPutLike;
-    this._apiDeleteLike = apiDeleteLike;
     this._functionOpenCard = handleCardClick;
     this._functionOpenPopupConfirm = handleDeleteClick;
+    this._functionHideElement = handleHideElement;
+    this._functionChangeLikePosition = changeLikePosition;
   }
   //Метод получения из шаблона элемент Карточки
   _getTemplate() {
@@ -46,37 +47,30 @@ export default class Card {
     this._cardCounterLikeElement.textContent = this._likes.length;
 
     if (!(this._myId === this._ownerId)) {
-      this._deleteButton.style.display = 'none';
+      this._functionHideElement(this._deleteButton);
     }
 
-    if (this._likes.find((obj) => this._myId === obj._id)) {
+    if (this.isLiked()) {
       this._likeButton.classList.add(this._cardHeartActive);
     }
 
     return this._element;
   }
+  //Метод определяет, принадлежит ли лайк пользователю
+  isLiked() {
+    return Boolean(this._likes.find(item => item._id === this._myId));
+  }
   //Метод Лайка карточки
-  _turnLikeButton = () => {
-    if (!this._likeButton.classList.contains(this._cardHeartActive)) {
-      this._apiPutLike()
-      .then((data) => {
-        this._cardCounterLikeElement.textContent = data.likes.length;
-      })
-      .catch(err => console.log(err));
-      this._likeButton.classList.add(this._cardHeartActive);
-    } else {
-      this._apiDeleteLike()
-        .then((data) => {
-          this._cardCounterLikeElement.textContent = data.likes.length;
-        })
-      .catch(err => console.log(err));
-      this._likeButton.classList.remove(this._cardHeartActive);
-    }}
-
+  turnLikeButton = (data) => {
+    this._cardCounterLikeElement.textContent = data.likes.length;
+    if (!this.isLiked()) this._likeButton.classList.add(this._cardHeartActive);
+    else this._likeButton.classList.remove(this._cardHeartActive);
+    this._likes = data.likes;
+  }
   //Метод установки слушателя Лайка на элемент сердечка
   _setLikeEventListener() {
     this._likeButton = this._element.querySelector(this._cardHeart);
-    this._likeButton.addEventListener('click', this._turnLikeButton);
+    this._likeButton.addEventListener('click', () => this._functionChangeLikePosition(this._card));
   }
   //Метод удаления карточки
   deleteImage() {
