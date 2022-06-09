@@ -42,6 +42,7 @@
 
 
 
+
 .popup__save-button{background-color:#000;border:none;border-radius:2px;color:#fff;font-size:14px;font-weight:400;height:46px;line-height:17px;margin:15px auto 25px;padding:0;transition:opacity .1s linear;width:238px}@media (min-width:767px){.popup__save-button{font-size:18px;height:50px;line-height:22px;margin:18px auto 37px;width:358px}}.popup__save-button:hover{cursor:pointer;opacity:.8}
 .popup__save-button_invalid{background-color:#fff;border:1px solid #000;color:#000;opacity:.2}.popup__save-button_invalid:hover{cursor:auto;opacity:.2}
 .popup__title{font-size:18px;font-weight:900;line-height:22px;margin:25px auto 75px;text-align:start;width:238px}@media (min-width:767px){.popup__title{font-size:24px;line-height:29px;margin:34px auto 54px;width:358px}}
