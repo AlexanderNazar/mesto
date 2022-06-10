@@ -11,7 +11,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-import Element from '../components/Element.js';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
@@ -42,7 +41,6 @@ Promise.all([ api.setUserInfo(), api.getInitialCards()])
         .then(data => card.turnLikeButton(data))
         .catch(err => console.log(err))
       },
-      handleHideElement: (element) => new Element(element).hideElement(),
       handleCardClick: () => {
         const imagePreview = new PopupWithImage('.popup_type_preview');
         imagePreview.open(item);

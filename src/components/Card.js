@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, selectorsCard, userId, {changeLikePosition, handleHideElement, handleCardClick, handleDeleteClick }) {
+  constructor(data, selectorsCard, userId, {changeLikePosition, handleCardClick, handleDeleteClick }) {
     this._card = data;
     this._name = data.name;
     this._link = data.link;
@@ -10,13 +10,13 @@ export default class Card {
     this._cardHeart = selectorsCard.cardHeart;
     this._cardHeartActive = selectorsCard.cardHeartActive;
     this._cardButtonDelete = selectorsCard.cardButtonDelete;
+    this._cardButtonDeleteInactive = selectorsCard.cardButtonDeleteInactive;
     this._cardCounterLike = selectorsCard.cardCounterLike;
     this._myId = userId;
     this._ownerId = data.owner._id;
     this._likes = data.likes;
     this._functionOpenCard = handleCardClick;
     this._functionOpenPopupConfirm = handleDeleteClick;
-    this._functionHideElement = handleHideElement;
     this._functionChangeLikePosition = changeLikePosition;
   }
   //Метод получения из шаблона элемент Карточки
@@ -47,7 +47,7 @@ export default class Card {
     this._cardCounterLikeElement.textContent = this._likes.length;
 
     if (!(this._myId === this._ownerId)) {
-      this._functionHideElement(this._deleteButton);
+      this._deleteButton.classList.add(this._cardButtonDeleteInactive);
     }
 
     if (this.isLiked()) {

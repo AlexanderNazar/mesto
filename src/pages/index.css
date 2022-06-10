@@ -32,6 +32,8 @@
 
 @import url(../blocks/element/__delete/element__delete.css);
 
+@import url(../blocks/element/__delete/_type/element__delete_type_inactive.css);
+
 @import url(../blocks/element/__image/element__image.css);
 
 @import url(../blocks/element/__caption/element__caption.css);

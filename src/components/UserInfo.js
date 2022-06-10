@@ -20,5 +20,6 @@ export default class UserInfo {
   //Метод изменения аватара
   updateAvatar = (data) => {
     this._avatar.src = data.avatar;
+    this._avatar.alt = data.name;
   }
 }
