@@ -33,6 +33,8 @@ Promise.all([ api.setUserInfo(), api.getInitialCards()])
   })
   .catch(err => console.log(err))
 
+  const popupConfirm = new PopupWithConfirm('.popup_type_confirm');
+
   const renderCards = new Section({
   renderer: (item) => {
     const card = new Card(item, selectorsCard, userId, {
@@ -46,21 +48,20 @@ Promise.all([ api.setUserInfo(), api.getInitialCards()])
         imagePreview.open(item);
         imagePreview.setEventListeners();
       },
-      handleDeleteClick: () => {
-        const popupConfirm = new PopupWithConfirm({
-          deleteCard: () => {
-            api.deleteImage(item._id)
-            .then(data => {
-              card.deleteImage();
-              popupConfirm.close()
+      handleDeleteClick: (item) => {
+        console.log(item._card._id)
+        popupConfirm.visualizeLoading('Да');
+        popupConfirm.setSubmitHanlder(() => {
+          api.deleteImage(item._card._id)
+            .then((res) => {
+              popupConfirm.close();
+              item.deleteImage();
             })
-            .catch(err => console.log(err))
-            .finally(popupConfirm.visualizeLoading('Удаление...'))
-          }
-        },
-        '.popup_type_confirm');
-        popupConfirm.visualizeLoading('Да')
-        popupConfirm.setEventListeners();
+            .catch((res) => {
+              console.log(res);
+            })
+            .finally(popupConfirm.visualizeLoading('Удаление...'));
+        });
         popupConfirm.open();
       }
     });
@@ -110,7 +111,6 @@ const popupUpdateAvatarClass = new PopupWithForm({
     api.updateAvatar(inputValueOject)
       .then(data => {
         userInfo.updateAvatar(data)
-        //avatarElement.src = data.avatar;
         popupUpdateAvatarClass.close()
       })
       .catch(err => console.log(err))
@@ -123,6 +123,7 @@ const popupUpdateAvatarClass = new PopupWithForm({
 popupEditProfileClass.setEventListeners();
 popupAddImageClass.setEventListeners();
 popupUpdateAvatarClass.setEventListeners();
+popupConfirm.setEventListeners();
 
 //Подключаем слушатели на кнопку открытия Попапа изменения профиля
 profileEditButton.addEventListener('click', () => {

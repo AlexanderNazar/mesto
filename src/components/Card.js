@@ -77,9 +77,9 @@ export default class Card {
     this._element.remove();
   }
   //Метод установки слушателя Удаления на элемент удаления
-  _setDeleteImageEventListener() {
+  _setDeleteImageEventListener = () => {
     this._deleteButton = this._element.querySelector(this._cardButtonDelete);
-    this._deleteButton.addEventListener('click', () => this._functionOpenPopupConfirm());
+    this._deleteButton.addEventListener('click', () => this._functionOpenPopupConfirm(this));
   }
   //Метод установки слушателя открытия Превью на элемент картинку
   _setOpenPreviewImageEventListener() {
